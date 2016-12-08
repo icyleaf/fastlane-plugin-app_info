@@ -1,0 +1,4 @@
+lane :test do
+  file = File.expand_path('/path/to/app/file')
+  app_info(file: file)
+end
