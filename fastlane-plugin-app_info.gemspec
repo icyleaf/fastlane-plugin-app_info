@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = %q{icyleaf.cn@gmail.com}
 
   spec.summary       = %q{Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc.}
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-app_info"
+  spec.homepage      = "https://github.com/icyleaf/fastlane-plugin-app_info"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
