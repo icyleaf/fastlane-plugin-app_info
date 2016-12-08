@@ -6,10 +6,10 @@ require 'fastlane/plugin/app_info/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-app_info'
   spec.version       = Fastlane::AppInfo::VERSION
-  spec.author        = %q{icyleaf}
-  spec.email         = %q{icyleaf.cn@gmail.com}
+  spec.author        = 'icyleaf'
+  spec.email         = 'icyleaf.cn@gmail.com'
 
-  spec.summary       = %q{Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc.}
+  spec.summary       = 'Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc.'
   spec.homepage      = "https://github.com/icyleaf/fastlane-plugin-app_info"
   spec.license       = "MIT"
 

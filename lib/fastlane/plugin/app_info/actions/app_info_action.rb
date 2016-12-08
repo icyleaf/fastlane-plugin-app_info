@@ -1,4 +1,4 @@
-require 'app_info'
+require 'app-info'
 require 'terminal-table'
 
 module Fastlane
@@ -46,7 +46,7 @@ module Fastlane
       end
 
       def self.description
-        "Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc."
+        "Parse and dump mobile app(ipa/apk) metedata."
       end
 
       def self.authors
