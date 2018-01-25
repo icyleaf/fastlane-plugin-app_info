@@ -1,4 +1,8 @@
+require 'pp'
+
 lane :test do
-  file = File.expand_path('/path/to/app/file')
-  app_info(file: file)
+  app_info(file: './spec/fixtures/iphone.ipa')
+
+  app_info = JSON.parse(ENV['APP_INFO'])
+  pp app_info
 end

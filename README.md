@@ -14,6 +14,37 @@ fastlane add_plugin app_info
 
 Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc.
 
+## Configure
+
+```+----------------------------------------------------------------------------------------+
+|                                        app_info                                        |
++----------------------------------------------------------------------------------------+
+| Parse and dump mobile app(ipa/apk) metedata.                                           |
+|                                                                                        |
+| Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc. |
+|                                                                                        |
+| Created by icyleaf <icyleaf.cn@gmail.com>                                              |
++----------------------------------------------------------------------------------------+
+
++------+-------------------------------------------------+---------------+---------+
+|                                 app_info Options                                 |
++------+-------------------------------------------------+---------------+---------+
+| Key  | Description                                     | Env Var       | Default |
++------+-------------------------------------------------+---------------+---------+
+| file | Path to your ipa/apk file. Optional if you use  | APP_INFO_FILE |         |
+|      | the `gym`, `ipa` or `xcodebuild` action.        |               |         |
++------+-------------------------------------------------+---------------+---------+
+
++----------+---------------------------------+
+|         app_info Output Variables          |
++----------+---------------------------------+
+| Key      | Description                     |
++----------+---------------------------------+
+| APP_INFO | the json formated app info data |
++----------+---------------------------------+
+Access the output values using `lane_context[SharedValues::VARIABLE_NAME]`
+```
+
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
@@ -23,6 +54,7 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 ### iOS
 
 ```bash
+$ bundle exec fastlane action app_info
 +-----------------------------+-------------------------------------------------+
 |                          Summary for app_info 0.1.0                           |
 +-----------------------------+-------------------------------------------------+

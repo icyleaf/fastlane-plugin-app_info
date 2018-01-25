@@ -3,6 +3,10 @@ require 'terminal-table'
 
 module Fastlane
   module Actions
+    module SharedValues
+      APP_INFO = :APP_INFO
+    end
+
     class AppInfoAction < Action
       def self.run(params)
         @file = params.fetch(:file)
@@ -11,6 +15,9 @@ module Fastlane
         @app = ::AppInfo.parse(@file)
 
         print_table!
+
+        # Store shared value
+        Helper::AppInfoHelper.store_sharedvalue(:APP_INFO, Helper::AppInfoHelper.app_to_json(@app))
       end
 
       def self.print_table!
@@ -28,7 +35,7 @@ module Fastlane
       end
 
       def self.common_columns
-        %w(name release_version build_version identifier os).each_with_object({}) do |key, hash|
+        Helper::AppInfoHelper.common_columns.each_with_object({}) do |key, hash|
           name = key.split('_').map(&:capitalize).join('')
           hash[name] = Helper::AppInfoHelper.object_to_column(@app.send(key.to_sym))
         end
@@ -50,11 +57,17 @@ module Fastlane
       end
 
       def self.authors
-        ["icyleaf"]
+        ["icyleaf <icyleaf.cn@gmail.com>"]
       end
 
       def self.details
         "Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc."
+      end
+
+      def self.output
+        [
+          [SharedValues::APP_INFO.to_s, 'the json formated app info data']
+        ]
       end
 
       def self.available_options
@@ -71,7 +84,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        [:ios, :android].include?(platform)
+        %i[ios android].include?(platform)
       end
     end
   end
