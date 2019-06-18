@@ -16,7 +16,8 @@ Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, ico
 
 ## Configure
 
-```+----------------------------------------------------------------------------------------+
+```
++----------------------------------------------------------------------------------------+
 |                                        app_info                                        |
 +----------------------------------------------------------------------------------------+
 | Parse and dump mobile app(ipa/apk) metedata.                                           |
@@ -53,10 +54,9 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ### iOS
 
-```bash
-$ bundle exec fastlane action app_info
+```text
 +-----------------------------+-------------------------------------------------+
-|                          Summary for app_info 0.1.0                           |
+|                          Summary for app_info 0.3.0                           |
 +-----------------------------+-------------------------------------------------+
 | Name                        | iOS Team Provisioning Profile: *                |
 | ReleaseVersion              | 1.2.3                                           |
@@ -84,16 +84,24 @@ $ bundle exec fastlane action app_info
 
 ### Android
 
-```bash
-+----------------+-------------------------+
-|        Summary for app_info 0.1.0        |
-+----------------+-------------------------+
-| Name           | AppInfoDemo             |
-| ReleaseVersion | 1.2.3                   |
-| BuildVersion   | 5                       |
-| Identifier     | com.icyleaf.appinfodemo |
-| Os             | Android                 |
-+----------------+-------------------------+
+```text
++--------------------+------------------------------+
+|            Summary for app_info 0.3.0             |
++--------------------+------------------------------+
+| Name               | AppInfoDemo                  |
+| ReleaseVersion     | 1.2.3                        |
+| BuildVersion       | 5                            |
+| Identifier         | com.icyleaf.appinfodemo      |
+| OS                 | Android                      |
+| Size               | 2.93 MB                      |
+| MinSDKVersion      | 14                           |
+| TargetSDKVersion   | 29                           |
+| Signatures         | META-INF/CERT.RSA            |
+| CertificateIssuers | CN:Android Debug O:Android   |
+| UsePermissions (2) | android.permission.BLUETOOTH |
+|                    | android.permission.CAMERA    |
+| UseFeatures (0)    |                              |
++--------------------+------------------------------+
 ```
 
 ## Run tests for this plugin
