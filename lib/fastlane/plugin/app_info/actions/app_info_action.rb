@@ -31,24 +31,43 @@ module Fastlane
       end
 
       def self.table_columns
-        common_columns.merge(ios_columns)
+        common_columns.merge(extra_columns)
       end
 
       def self.common_columns
         Helper::AppInfoHelper.common_columns.each_with_object({}) do |key, hash|
-          name = key.split('_').map(&:capitalize).join('')
-          hash[name] = Helper::AppInfoHelper.object_to_column(@app.send(key.to_sym))
+          name = key == 'os' ? key.upcase : key.split('_').map(&:capitalize).join('')
+          value = key == 'size' ? @app.size(true) : @app.send(key.to_sym)
+          hash[name] = Helper::AppInfoHelper.object_to_column(value)
         end
       end
 
-      def self.ios_columns
-        return {} unless @app.os == 'iOS' && @app.mobileprovision && !@app.mobileprovision.empty?
+      def self.extra_columns
+        if @app.os == 'iOS'
+          return {} unless @app.mobileprovision && !@app.mobileprovision.empty?
 
-        @app.mobileprovision.mobileprovision.each_with_object({}) do |(key, value), hash|
-          next if key == 'DeveloperCertificates'
+          @app.mobileprovision.mobileprovision.each_with_object({}) do |(key, value), hash|
+            next if key == 'DeveloperCertificates'
 
-          name = Helper::AppInfoHelper.column_name(key, value)
-          hash[name] = Helper::AppInfoHelper.object_to_column(value)
+            name = Helper::AppInfoHelper.column_name(key, value)
+            hash[name] = Helper::AppInfoHelper.object_to_column(value)
+          end
+        elsif @app.os == 'Android'
+          signs = @app.signs.map {|f| f.path }
+          issuers = Helper::AppInfoHelper.android_certificate_issuer(@app)
+          permissions = @app.use_permissions
+          features = @app.use_features
+
+          {
+            "MinSDKVersion" => Helper::AppInfoHelper.object_to_column(@app.min_sdk_version),
+            "TargetSDKVersion" => Helper::AppInfoHelper.object_to_column(@app.target_sdk_version),
+            "Signatures" => Helper::AppInfoHelper.object_to_column(signs),
+            "CertificateIssuers" => Helper::AppInfoHelper.object_to_column(issuers),
+            "UsePermissions (#{permissions.size})" => Helper::AppInfoHelper.object_to_column(permissions),
+            "UseFeatures (#{features.size})" => Helper::AppInfoHelper.object_to_column(features),
+          }
+        else
+          {}
         end
       end
 
