@@ -27,14 +27,17 @@ Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, ico
 | Created by icyleaf <icyleaf.cn@gmail.com>                                              |
 +----------------------------------------------------------------------------------------+
 
-+------+-------------------------------------------------+---------------+---------+
-|                                 app_info Options                                 |
-+------+-------------------------------------------------+---------------+---------+
-| Key  | Description                                     | Env Var       | Default |
-+------+-------------------------------------------------+---------------+---------+
-| file | Path to your ipa/apk file. Optional if you use  | APP_INFO_FILE |         |
-|      | the `gym`, `ipa` or `xcodebuild` action.        |               |         |
-+------+-------------------------------------------------+---------------+---------+
++-------+---------------------------------+----------------+---------+
+|                          app_info Options                          |
++-------+---------------------------------+----------------+---------+
+| Key   | Description                     | Env Var(s)     | Default |
++-------+---------------------------------+----------------+---------+
+| file  | Path to your ipa/apk file.      | APP_INFO_FILE  |         |
+|       | Optional if you use the `gym`,  |                |         |
+|       | `ipa` or `xcodebuild` action.   |                |         |
+| clean | Clean cache files to reduce     | APP_INFO_CLEAN | true    |
+|       | disk size                       |                |         |
++-------+---------------------------------+----------------+---------+
 
 +----------+---------------------------------+
 |         app_info Output Variables          |
@@ -56,7 +59,7 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ```text
 +-----------------------------+-------------------------------------------------+
-|                          Summary for app_info 0.3.0                           |
+|                          Summary for app_info 0.4.0                           |
 +-----------------------------+-------------------------------------------------+
 | Name                        | iOS Team Provisioning Profile: *                |
 | ReleaseVersion              | 1.2.3                                           |
@@ -86,7 +89,7 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ```text
 +--------------------+------------------------------+
-|            Summary for app_info 0.3.0             |
+|            Summary for app_info 0.4.0             |
 +--------------------+------------------------------+
 | Name               | AppInfoDemo                  |
 | ReleaseVersion     | 1.2.3                        |
