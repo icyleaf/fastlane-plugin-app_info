@@ -16,6 +16,8 @@ module Fastlane
 
         print_table!
 
+        @app.clear! if params.fetch(:clean)
+
         # Store shared value
         Helper::AppInfoHelper.store_sharedvalue(:APP_INFO, Helper::AppInfoHelper.app_to_json(@app))
       end
@@ -98,7 +100,12 @@ module Fastlane
                                        optional: true,
                                        verify_block: proc do |value|
                                          raise "Couldn't find app file".red unless File.exist?(value)
-                                       end)
+                                       end),
+          FastlaneCore::ConfigItem.new(key: :clean,
+                                       env_name: 'APP_INFO_CLEAN',
+                                       description: 'Clean cache files to reduce disk size',
+                                       default_value: true,
+                                       optional: true)
         ]
       end
 
