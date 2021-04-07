@@ -49,7 +49,7 @@ module Fastlane
           return {} unless @app.mobileprovision && !@app.mobileprovision.empty?
 
           @app.mobileprovision.mobileprovision.each_with_object({}) do |(key, value), hash|
-            next if key == 'DeveloperCertificates'
+            next if key == 'DeveloperCertificates' || key == 'Name'
 
             name = Helper::AppInfoHelper.column_name(key, value)
             hash[name] = Helper::AppInfoHelper.object_to_column(value)
