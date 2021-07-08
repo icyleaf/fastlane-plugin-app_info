@@ -7,6 +7,8 @@ module Fastlane
 
       def self.hash_to_columns(raw)
         raw.each_with_object({}) do |(key, value), obj|
+          next if value.respond_to?(:empty?) && value.empty?
+
           name = upcase(column_name(key, value))
           obj[name] = object_to_column(value)
         end

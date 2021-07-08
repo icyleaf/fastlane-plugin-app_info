@@ -38,15 +38,22 @@ Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, ico
 | clean | Clean cache files to reduce     | APP_INFO_CLEAN | true    |
 |       | disk size                       |                |         |
 +-------+---------------------------------+----------------+---------+
+* = default value is dependent on the user's system
 
-+----------+---------------------------------+
-|         app_info Output Variables          |
-+----------+---------------------------------+
-| Key      | Description                     |
-+----------+---------------------------------+
-| APP_INFO | the json formated app info data |
-+----------+---------------------------------+
-Access the output values using `lane_context[SharedValues::VARIABLE_NAME]`
++----------+-----------------------------------------+
+|             app_info Output Variables              |
++----------+-----------------------------------------+
+| Key      | Description                             |
++----------+-----------------------------------------+
+| APP_INFO | The JSON formated metadata of given app |
++----------+-----------------------------------------+
+Access the output values using `lane_context[SharedValues::APP_INFO]`
+
++-----------------------------------------------+
+|             app_info Return Value             |
++-----------------------------------------------+
+| Returns a Hash formated metadata of given app |
++-----------------------------------------------+
 ```
 
 ## Example
@@ -59,23 +66,28 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ```text
 +-----------------------------+-------------------------------------------------+
-|                          Summary for app_info 0.4.0                           |
+|                          Summary for app_info 0.5.0                           |
 +-----------------------------+-------------------------------------------------+
-| Name                        | iOS Team Provisioning Profile: *                |
+| OS                          | iOS                                             |
+| Name                        | AppInfoDemo                                     |
 | ReleaseVersion              | 1.2.3                                           |
 | BuildVersion                | 5                                               |
 | Identifier                  | com.icyleaf.AppInfoDemo                         |
-| Os                          | iOS                                             |
-| AppIDName                   | XC Wildcard                                     |
-| ApplicationIdentifierPrefix | **********                                      |
-| CreationDate                | 2016-07-27 17:44:49 +0800                       |
+| Size                        | 41.70 KB                                        |
+| DeviceType                  | iPhone                                          |
+| Releasetype                 | AdHoc                                           |
+| Archs (2)                   | armv7                                           |
+|                             | arm64                                           |
+| Appidname                   | XC Wildcard                                     |
+| Applicationidentifierprefix | 5PJA6N5A3B                                      |
+| Creationdate                | 2016-07-27 17:44:49 +0800                       |
 | Platform                    | iOS                                             |
-| Entitlements (4)            | keychain-access-groups: ["**********.*"]        |
+| Entitlements (4)            | keychain-access-groups: ["5PJA6N5A3B.*"]        |
 |                             | get-task-allow: true                            |
-|                             | application-identifier: **********.*            |
-|                             | com.apple.developer.team-identifier: ********** |
-| ExpirationDate              | 2017-07-27 17:44:49 +0800                       |
-| ProvisionedDevices (2)      | ****************************************        |
+|                             | application-identifier: 5PJA6N5A3B.*            |
+|                             | com.apple.developer.team-identifier: 5PJA6N5A3B |
+| Expirationdate              | 2017-07-27 17:44:49 +0800                       |
+| Provisioneddevices (100)    | 18cf53cddee60c52f9c97b1521e7cbf8342628da        |
 |                             | ****************************************        |
 | TeamIdentifier              | **********                                      |
 | TeamName                    | EWS Inc                                         |
@@ -89,21 +101,22 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ```text
 +--------------------+------------------------------+
-|            Summary for app_info 0.4.0             |
+|            Summary for app_info 0.5.0             |
 +--------------------+------------------------------+
+| OS                 | Android                      |
 | Name               | AppInfoDemo                  |
 | ReleaseVersion     | 1.2.3                        |
 | BuildVersion       | 5                            |
 | Identifier         | com.icyleaf.appinfodemo      |
-| OS                 | Android                      |
 | Size               | 2.93 MB                      |
-| MinSDKVersion      | 14                           |
-| TargetSDKVersion   | 29                           |
+| DeviceType         | Phone                        |
+| Minsdkversion      | 14                           |
+| Targetsdkversion   | 29                           |
 | Signatures         | META-INF/CERT.RSA            |
-| CertificateIssuers | CN:Android Debug O:Android   |
-| UsePermissions (2) | android.permission.BLUETOOTH |
+| Certificateissuers | CN:Android Debug O:Android   |
+| Usepermissions (2) | android.permission.BLUETOOTH |
 |                    | android.permission.CAMERA    |
-| UseFeatures (0)    |                              |
+| Usefeatures        |                              |
 +--------------------+------------------------------+
 ```
 
