@@ -27,9 +27,8 @@ module Fastlane
         params[:rows] = table_columns
         params[:title] = "Summary for app_info #{AppInfo::VERSION}".green
 
-        puts ""
+        UI.verbose "Raw params: #{table_columns}"
         puts Terminal::Table.new(params)
-        puts ""
       end
 
       def self.table_columns
@@ -49,7 +48,7 @@ module Fastlane
           return {} unless @app.mobileprovision && !@app.mobileprovision.empty?
 
           @app.mobileprovision.mobileprovision.each_with_object({}) do |(key, value), hash|
-            next if key == 'DeveloperCertificates' || key == 'Name'
+            next if key == 'DeveloperCertificates' || key == 'Name' || key == 'DER-Encoded-Profile'
 
             name = Helper::AppInfoHelper.column_name(key, value)
             hash[name] = Helper::AppInfoHelper.object_to_column(value)
