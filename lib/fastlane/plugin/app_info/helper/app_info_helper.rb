@@ -3,7 +3,7 @@ require 'json'
 module Fastlane
   module Helper
     class AppInfoHelper
-      COMMON_COLUMNS = %w[os name release_version build_version identifier size]
+      COMMON_COLUMNS = %w[os name release_version build_version identifier size device_type]
 
       def self.hash_to_columns(raw)
         raw.each_with_object({}) do |(key, value), obj|
@@ -17,13 +17,17 @@ module Fastlane
       end
 
       def self.platform_columns(app)
+        obj = {}
+
         if app.os == 'iOS'
+          obj[upcase('release_type')] = app.release_type
+          obj[upcase('archs')] = app.archs
           return {} unless app.mobileprovision && !app.mobileprovision.empty?
 
-          app.mobileprovision.mobileprovision.each_with_object({}) do |(key, value), hash|
+          app.mobileprovision.mobileprovision.each do |key, value|
             next if key == 'DeveloperCertificates' || key == 'Name' || key == 'DER-Encoded-Profile'
 
-            hash[upcase(key)] = value
+            obj[upcase(key)] = value
           end
         elsif app.os == 'Android'
           signs = app.signs.map { |f| f.path }
@@ -31,7 +35,7 @@ module Fastlane
           permissions = app.use_permissions
           features = app.use_features
 
-          {
+          obj = {
             "MinSDKVersion" => app.min_sdk_version,
             "TargetSDKVersion" => app.target_sdk_version,
             "Signatures" => signs,
@@ -39,9 +43,9 @@ module Fastlane
             "UsePermissions" => permissions,
             "UseFeatures" => features,
           }
-        else
-          {}
         end
+
+        obj
       end
 
       def self.common_columns(app)
