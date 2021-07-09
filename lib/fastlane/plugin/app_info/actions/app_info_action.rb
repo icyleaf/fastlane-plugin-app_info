@@ -9,68 +9,25 @@ module Fastlane
 
     class AppInfoAction < Action
       def self.run(params)
-        @file = params.fetch(:file)
-        UI.user_error! 'You have to either pass an ipa or an apk file' unless @file
-        @file = File.expand_path(@file)
-        @app = ::AppInfo.parse(@file)
+        file = params.fetch(:file)
+        UI.user_error! 'You have to either pass an ipa or an apk file' unless file
+        file = File.expand_path(file)
+        app = ::AppInfo.parse(file)
+        raw = Helper::AppInfoHelper.raw_data(app)
 
-        print_table!
+        UI.verbose "Raw params: #{raw}"
+        print_table(raw)
+        app.clear! if params.fetch(:clean)
 
-        @app.clear! if params.fetch(:clean)
-
-        # Store shared value
-        Helper::AppInfoHelper.store_sharedvalue(:APP_INFO, Helper::AppInfoHelper.app_to_json(@app))
+        Helper::AppInfoHelper.store_sharedvalue(:APP_INFO, JSON.dump(raw))
+        raw
       end
 
-      def self.print_table!
-        params = {}
-        params[:rows] = table_columns
-        params[:title] = "Summary for app_info #{AppInfo::VERSION}".green
-
-        puts ""
-        puts Terminal::Table.new(params)
-        puts ""
-      end
-
-      def self.table_columns
-        common_columns.merge(extra_columns)
-      end
-
-      def self.common_columns
-        Helper::AppInfoHelper.common_columns.each_with_object({}) do |key, hash|
-          name = key == 'os' ? key.upcase : key.split('_').map(&:capitalize).join('')
-          value = key == 'size' ? @app.size(true) : @app.send(key.to_sym)
-          hash[name] = Helper::AppInfoHelper.object_to_column(value)
-        end
-      end
-
-      def self.extra_columns
-        if @app.os == 'iOS'
-          return {} unless @app.mobileprovision && !@app.mobileprovision.empty?
-
-          @app.mobileprovision.mobileprovision.each_with_object({}) do |(key, value), hash|
-            next if key == 'DeveloperCertificates' || key == 'Name'
-
-            name = Helper::AppInfoHelper.column_name(key, value)
-            hash[name] = Helper::AppInfoHelper.object_to_column(value)
-          end
-        elsif @app.os == 'Android'
-          signs = @app.signs.map {|f| f.path }
-          issuers = Helper::AppInfoHelper.android_certificate_issuer(@app)
-          permissions = @app.use_permissions
-          features = @app.use_features
-
-          {
-            "MinSDKVersion" => Helper::AppInfoHelper.object_to_column(@app.min_sdk_version),
-            "TargetSDKVersion" => Helper::AppInfoHelper.object_to_column(@app.target_sdk_version),
-            "Signatures" => Helper::AppInfoHelper.object_to_column(signs),
-            "CertificateIssuers" => Helper::AppInfoHelper.object_to_column(issuers),
-            "UsePermissions (#{permissions.size})" => Helper::AppInfoHelper.object_to_column(permissions),
-            "UseFeatures (#{features.size})" => Helper::AppInfoHelper.object_to_column(features),
-          }
-        else
-          {}
-        end
+      def self.print_table(raw)
+        puts Terminal::Table.new(
+          title: "Summary for app_info #{AppInfo::VERSION}".green,
+          rows: Helper::AppInfoHelper.hash_to_columns(raw)
+        )
       end
 
       def self.description
@@ -85,9 +42,13 @@ module Fastlane
         "Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc."
       end
 
+      def self.return_value
+        "Returns a Hash formated metadata of given app"
+      end
+
       def self.output
         [
-          [SharedValues::APP_INFO.to_s, 'the json formated app info data']
+          [SharedValues::APP_INFO.to_s, 'The JSON formated metadata of given app']
         ]
       end
 

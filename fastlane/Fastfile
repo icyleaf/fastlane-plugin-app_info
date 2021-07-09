@@ -1,8 +1,15 @@
-require 'pp'
+lane :test do |options|
+  file = options[:file] || './spec/fixtures/iphone.ipa'
+  raw = app_info(file: file)
 
-lane :test do
-  app_info(file: './spec/fixtures/iphone.ipa')
+  puts "Fetch raw data from direct return value: "
+  puts raw
 
-  app_info = JSON.parse(ENV['APP_INFO'])
-  pp app_info
+  puts ""
+  puts "Fetch raw data from stored value in fastlane:"
+  puts JSON.parse(lane_context[SharedValues::APP_INFO])
+
+  puts ""
+  puts "Fetch raw data from ENV:"
+  puts JSON.parse(ENV['APP_INFO'])
 end
