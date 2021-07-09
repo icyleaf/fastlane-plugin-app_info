@@ -53,7 +53,7 @@ module Fastlane
       def self.common_columns(app)
         COMMON_COLUMNS.each_with_object({}) do |key, hash|
           value = key == 'size' ? app.size(true) : app.send(key.to_sym)
-          hash[key] = value
+          hash[upcase(key)] = value
         end
       end
 
