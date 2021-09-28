@@ -1,4 +1,4 @@
-lane :test do |options|
+lane :ipa do |options|
   file = options[:file] || './spec/fixtures/iphone.ipa'
   raw = app_info(file: file)
 

@@ -28,11 +28,10 @@ module Fastlane
 
           app.mobileprovision.mobileprovision.each do |key, value|
             next if key == 'DeveloperCertificates' || key == 'Name' || key == 'DER-Encoded-Profile'
-
             obj[upcase(key)] = value
           end
         elsif app.os == 'Android'
-          signs = app.signs.map { |f| f.path }
+          signs = app.signs.map(&:path)
           issuers = android_certificate_issuer(app)
           permissions = app.use_permissions
           features = app.use_features
@@ -52,7 +51,7 @@ module Fastlane
 
       def self.common_columns(app)
         COMMON_COLUMNS.each_with_object({}) do |key, hash|
-          value = key == 'size' ? app.size(true) : app.send(key.to_sym)
+          value = key == 'size' ? app.size(human_size: true) : app.send(key.to_sym)
           hash[upcase(key)] = value
         end
       end
@@ -80,7 +79,14 @@ module Fastlane
       end
 
       def self.upcase(key)
-        key == 'os' ? key.upcase : key.split('_').map(&:capitalize).join('')
+        return key.upcase if key == 'os'
+
+        str = key.dup
+        ['-', '_', '\s'].each do |s|
+          str = str.gsub(/(?:#{s}+)([a-z])/) { $1.upcase }
+        end
+
+        return str.gsub(/(\A|\s)([a-z])/) { $1 + $2.upcase }
       end
 
       def self.android_certificate_issuer(app)
