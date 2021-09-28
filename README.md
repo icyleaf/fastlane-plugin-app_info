@@ -12,42 +12,40 @@ fastlane add_plugin app_info
 
 ## About app_info
 
-Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc.
+Teardown tool for mobile app(ipa, apk and aab file), analysis metedata like version, name, icon etc.
 
 ## Configure
 
 ```
-+----------------------------------------------------------------------------------------+
-|                                        app_info                                        |
-+----------------------------------------------------------------------------------------+
-| Parse and dump mobile app(ipa/apk) metedata.                                           |
-|                                                                                        |
-| Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc. |
-|                                                                                        |
-| Created by icyleaf <icyleaf.cn@gmail.com>                                              |
-+----------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------+
+|                                               app_info                                               |
++------------------------------------------------------------------------------------------------------+
+| Parse and dump mobile app(ipa, apk and aab file) metedata.                                           |
+|                                                                                                      |
+| Teardown tool for mobile app(ipa, apk and aab file), analysis metedata like version, name, icon etc. |
+|                                                                                                      |
+| Created by icyleaf <icyleaf.cn@gmail.com>                                                            |
++------------------------------------------------------------------------------------------------------+
 
-+-------+---------------------------------+----------------+---------+
-|                          app_info Options                          |
-+-------+---------------------------------+----------------+---------+
-| Key   | Description                     | Env Var(s)     | Default |
-+-------+---------------------------------+----------------+---------+
-| file  | Path to your ipa/apk file.      | APP_INFO_FILE  |         |
-|       | Optional if you use the `gym`,  |                |         |
-|       | `ipa` or `xcodebuild` action.   |                |         |
-| clean | Clean cache files to reduce     | APP_INFO_CLEAN | true    |
-|       | disk size                       |                |         |
-+-------+---------------------------------+----------------+---------+
++-------+--------------------------------------------------------------------------+----------------+---------+
+|                                              app_info Options                                               |
++-------+--------------------------------------------------------------------------+----------------+---------+
+| Key   | Description                                                              | Env Var(s)     | Default |
++-------+--------------------------------------------------------------------------+----------------+---------+
+| file  | Path to your ipa, apk and aab file file. Optional if you use the `gym`,  | APP_INFO_FILE  |         |
+|       | `ipa` or `xcodebuild` action.                                            |                |         |
+| clean | Clean cache files to reduce disk size                                    | APP_INFO_CLEAN | true    |
++-------+--------------------------------------------------------------------------+----------------+---------+
 * = default value is dependent on the user's system
 
-+----------+-----------------------------------------+
-|             app_info Output Variables              |
-+----------+-----------------------------------------+
-| Key      | Description                             |
-+----------+-----------------------------------------+
-| APP_INFO | The JSON formated metadata of given app |
-+----------+-----------------------------------------+
-Access the output values using `lane_context[SharedValues::APP_INFO]`
++-------------+-----------------------------------------+
+|               app_info Output Variables               |
++-------------+-----------------------------------------+
+| Key         | Description                             |
++-------------+-----------------------------------------+
+| APP_INFO    | The JSON formated metadata of given app |
++-------------+-----------------------------------------+
+Access the output values using `lane_context[SharedValues::VARIABLE_NAME]`
 
 +-----------------------------------------------+
 |             app_info Return Value             |
@@ -66,7 +64,7 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ```text
 +-----------------------------+-------------------------------------------------+
-|                          Summary for app_info 0.5.0                           |
+|                          Summary for app_info 0.6.0                           |
 +-----------------------------+-------------------------------------------------+
 | OS                          | iOS                                             |
 | Name                        | AppInfoDemo                                     |
@@ -101,7 +99,7 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 
 ```text
 +--------------------+------------------------------+
-|            Summary for app_info 0.5.0             |
+|            Summary for app_info 0.6.0             |
 +--------------------+------------------------------+
 | OS                 | Android                      |
 | Name               | AppInfoDemo                  |

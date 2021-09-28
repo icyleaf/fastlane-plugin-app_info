@@ -10,7 +10,7 @@ module Fastlane
     class AppInfoAction < Action
       def self.run(params)
         file = params.fetch(:file)
-        UI.user_error! 'You have to either pass an ipa or an apk file' unless file
+        UI.user_error! 'You have to either pass an ipa, apk or aab file' unless file
         file = File.expand_path(file)
         app = ::AppInfo.parse(file)
         raw = Helper::AppInfoHelper.raw_data(app)
@@ -31,7 +31,7 @@ module Fastlane
       end
 
       def self.description
-        "Parse and dump mobile app(ipa/apk) metedata."
+        "Parse and dump mobile app(ipa, apk and aab file) metedata."
       end
 
       def self.authors
@@ -39,7 +39,7 @@ module Fastlane
       end
 
       def self.details
-        "Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc."
+        "Teardown tool for mobile app(ipa, apk and aab file), analysis metedata like version, name, icon etc."
       end
 
       def self.return_value
@@ -56,7 +56,7 @@ module Fastlane
         [
           FastlaneCore::ConfigItem.new(key: :file,
                                        env_name: 'APP_INFO_FILE',
-                                       description: 'Path to your ipa/apk file. Optional if you use the `gym`, `ipa` or `xcodebuild` action. ',
+                                       description: 'Path to your ipa, apk and aab file file. Optional if you use the `gym`, `ipa` or `xcodebuild` action. ',
                                        default_value: Actions.lane_context[SharedValues::IPA_OUTPUT_PATH] || Actions.lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH] || Dir['*.ipa'].last || Dir['*.apk'].last,
                                        optional: true,
                                        verify_block: proc do |value|

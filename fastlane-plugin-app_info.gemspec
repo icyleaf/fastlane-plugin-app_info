@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.author        = 'icyleaf'
   spec.email         = 'icyleaf.cn@gmail.com'
 
-  spec.summary       = 'Teardown tool for mobile app(ipa/apk), analysis metedata like version, name, icon etc.'
+  spec.summary       = 'Teardown tool for mobile app(ipa, apk and aab files), analysis metedata like version, name, icon etc.'
   spec.homepage      = "https://github.com/icyleaf/fastlane-plugin-app_info"
   spec.license       = "MIT"
 
