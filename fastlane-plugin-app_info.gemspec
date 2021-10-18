@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'app-info', '>= 2.7.0.beta2', '< 3'
+  spec.add_dependency 'app-info', '>= 2.7.0', '< 3'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'fastlane', '>= 1.111.0'
