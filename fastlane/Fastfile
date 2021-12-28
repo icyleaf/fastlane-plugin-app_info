@@ -1,5 +1,38 @@
-lane :ipa do |options|
+lane :dump_ipa do |options|
   file = options[:file] || './spec/fixtures/iphone.ipa'
+  raw = app_info(file: file)
+
+  puts "Fetch raw data from direct return value: "
+  puts raw
+
+  puts ""
+  puts "Fetch raw data from stored value in fastlane:"
+  puts JSON.parse(lane_context[SharedValues::APP_INFO])
+
+  puts ""
+  puts "Fetch raw data from ENV:"
+  puts JSON.parse(ENV['APP_INFO'])
+end
+
+lane :dump_apk do |options|
+  file = options[:file] || './spec/fixtures/android.apk'
+  raw = app_info(file: file)
+
+  puts "Fetch raw data from direct return value: "
+  puts raw
+
+  puts ""
+  puts "Fetch raw data from stored value in fastlane:"
+  puts JSON.parse(lane_context[SharedValues::APP_INFO])
+
+  puts ""
+  puts "Fetch raw data from ENV:"
+  puts JSON.parse(ENV['APP_INFO'])
+end
+
+
+lane :dump_aab do |options|
+  file = options[:file] || './spec/fixtures/android.aab'
   raw = app_info(file: file)
 
   puts "Fetch raw data from direct return value: "

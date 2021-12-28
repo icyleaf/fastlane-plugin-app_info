@@ -31,18 +31,13 @@ module Fastlane
             obj[upcase(key)] = value
           end
         elsif app.os == 'Android'
-          signs = app.signs.map(&:path)
-          issuers = android_certificate_issuer(app)
-          permissions = app.use_permissions
-          features = app.use_features
-
           obj = {
             "MinSDKVersion" => app.min_sdk_version,
             "TargetSDKVersion" => app.target_sdk_version,
-            "Signatures" => signs,
-            "CertificateIssuers" => issuers,
-            "UsePermissions" => permissions,
-            "UseFeatures" => features,
+            "DeepLinks" => app.deep_links,
+            "Schemes" => app.schemes,
+            "UsePermissions" => app.use_permissions,
+            "UseFeatures" => app.use_features,
           }
         end
 
@@ -87,15 +82,6 @@ module Fastlane
         end
 
         return str.gsub(/(\A|\s)([a-z])/) { $1 + $2.upcase }
-      end
-
-      def self.android_certificate_issuer(app)
-        app.certificates.each_with_object([]) do |cert, obj|
-          issuer = cert.certificate.issuer.to_a.map {|c| [c[0], c[1]] }.flatten.each_slice(2).to_h
-          obj << issuer.select{ |k, _| ['CN', 'OU', 'O'].include?(k) }
-                       .map {|k, v| "#{k}:#{v}"}
-                       .join(' ')
-        end
       end
 
       def self.store_sharedvalue(key, value)
